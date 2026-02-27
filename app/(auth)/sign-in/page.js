@@ -64,7 +64,7 @@ export default function Login() {
           {[
             { icon: '🔒', text: 'Secure cloud drive' },
             { icon: '⚡', text: 'Instant sync' },
-            { icon: '☁️', text: '2GB Free storage' },
+            { icon: '☁️', text: '2GB Free Global storage' },
           ].map(({ icon, text }) => (
             <div key={text} className="auth-pill">
               <span>{icon}</span>
