@@ -56,13 +56,13 @@ export default function Login() {
 
         <p className="auth-description" style={{ textAlign: 'center', maxWidth: '400px', margin: '0 auto 36px' }}>
           A beautiful, encrypted cloud drive where your documents,
-          images, and media live — always in sync, always private.
+          images, and media live - always in sync, always private.
         </p>
 
         {/* Core value propositions */}
         <div className="auth-pills" style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '44px' }}>
           {[
-            { icon: '🔒', text: 'End-to-end encrypted' },
+            { icon: '🔒', text: 'Secure cloud drive' },
             { icon: '⚡', text: 'Instant sync' },
             { icon: '☁️', text: '2GB Free storage' },
           ].map(({ icon, text }) => (
@@ -111,7 +111,7 @@ export default function Login() {
               </svg>
             </div>
             <div>
-              <div className="ill-card-name">report_q4.pdf</div>
+              <div className="ill-card-name">example.pdf</div>
               <div className="ill-card-meta">2.4 MB · Edited just now</div>
             </div>
           </div>
@@ -125,7 +125,7 @@ export default function Login() {
               </svg>
             </div>
             <div>
-              <div className="ill-card-name">photo_album.zip</div>
+              <div className="ill-card-name">example.zip</div>
               <div className="ill-card-meta">84 MB · Shared with 3</div>
             </div>
           </div>
@@ -138,7 +138,7 @@ export default function Login() {
               </svg>
             </div>
             <div>
-              <div className="ill-card-name">demo_reel.mp4</div>
+              <div className="ill-card-name">example.mp4</div>
               <div className="ill-card-meta">312 MB · Uploading…</div>
             </div>
           </div>
