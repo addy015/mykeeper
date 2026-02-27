@@ -14,7 +14,7 @@ const TYPE_CONFIG = {
         bg: "bg-rose-500/15",
         color: "#f87171",
         badge: "bg-rose-500/15 text-rose-400",
-        icon: (
+        icon: ( 
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                 <polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
@@ -75,7 +75,7 @@ function ThreeDots({ onClick }) {
     return (
         <button
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); onClick(e); }}
-            className="p-1.5 rounded-lg text-(--fg-muted) hover:text-foreground hover:bg-white/10 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
+            className="p-1.5 rounded-lg text-(--fg-muted) hover:text-foreground hover:bg-white/10 transition-all opacity-100"
             aria-label="File actions"
         >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
