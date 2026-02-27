@@ -1,0 +1,904 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS  –  Warm dark / amber editorial theme
+   ============================================================ */
+:root {
+  /* Palette */
+  --amber: #f59e0b;
+  --amber-light: #fcd34d;
+  --amber-dim: #d97706;
+  --orange: #ea580c;
+  --red-soft: #dc2626;
+
+  /* Backgrounds – warm black, not cold */
+  --bg-base: #0a0906;
+  --bg-card: rgba(18, 15, 10, 0.90);
+  --bg-left: #100e09;
+
+  /* Glass */
+  --glass-blur: blur(20px);
+
+  /* Inputs */
+  --input-bg: rgba(255, 245, 215, 0.04);
+  --input-border: rgba(255, 245, 215, 0.10);
+
+  /* Text */
+  --fg: #faf7f0;
+  --fg-dim: rgba(250, 242, 220, 0.50);
+  --fg-muted: rgba(250, 242, 220, 0.25);
+}
+
+@theme inline {
+  --color-background: var(--bg-base);
+  --color-foreground: var(--fg);
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    background: var(--bg-base);
+    color: var(--fg);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes card-float-1 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(-1.5deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(0.5deg);
+  }
+}
+
+@keyframes card-float-2 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(1.5deg);
+  }
+
+  50% {
+    transform: translateY(-7px) rotate(-0.5deg);
+  }
+}
+
+@keyframes card-float-3 {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-13px) rotate(1.5deg);
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes badge-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
+  }
+}
+
+@keyframes glow-ring {
+
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+}
+
+@keyframes orb-drift {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  33% {
+    transform: translate(24px, -18px);
+  }
+
+  66% {
+    transform: translate(-16px, 24px);
+  }
+}
+
+@keyframes dot-blink {
+
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+  }
+
+  40% {
+    opacity: 1;
+  }
+}
+
+@keyframes amber-shift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ============================================================
+   COMPONENT STYLES — Defined within @layer components to allow 
+   Tailwind utility classes to override them when necessary.
+   ============================================================ */
+@layer components {
+
+  /* ============================================================
+     LEFT PANEL BACKGROUND
+     ============================================================ */
+
+  /* Subtle noise texture on the left panel via SVG data URI */
+  .auth-left::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
+  }
+
+  /* Warm ambient orbs — amber/orange only, no rainbow */
+  .auth-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+    animation: orb-drift 20s ease-in-out infinite;
+  }
+
+  .auth-orb-1 {
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.18), transparent 70%);
+    top: -15%;
+    left: -10%;
+    animation-duration: 22s;
+  }
+
+  .auth-orb-2 {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(234, 88, 12, 0.14), transparent 70%);
+    bottom: 0;
+    right: -5%;
+    animation-duration: 16s;
+    animation-delay: -8s;
+  }
+
+  .auth-orb-3 {
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 70%);
+    top: 55%;
+    left: 55%;
+    animation-duration: 25s;
+    animation-delay: -5s;
+  }
+
+  .auth-orb-4 {
+    display: none;
+  }
+
+  /* ============================================================
+     FULL-SCREEN LOGIN LAYOUT
+     ============================================================ */
+  .login-fullscreen {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    background: var(--bg-left);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Noise texture overlay */
+  .login-noise {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    background-repeat: repeat;
+    mix-blend-mode: overlay;
+  }
+
+  /* The vertically-centred content column */
+  .login-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 24px 80px;
+    width: 100%;
+    max-width: 680px;
+    animation: card-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Hero Google button */
+  .btn-google-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 40px;
+    border-radius: 14px;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--fg);
+    background: rgba(255, 245, 215, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    box-shadow:
+      0 0 0 1px rgba(245, 158, 11, 0.08),
+      0 8px 32px rgba(0, 0, 0, 0.4);
+    transition: background 0.2s, border-color 0.2s, transform 0.15s, box-shadow 0.2s;
+    min-width: 280px;
+  }
+
+  .btn-google-hero:hover:not(:disabled) {
+    background: rgba(255, 245, 215, 0.10);
+    border-color: rgba(245, 158, 11, 0.45);
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 1px rgba(245, 158, 11, 0.15),
+      0 12px 40px rgba(0, 0, 0, 0.5),
+      0 0 24px rgba(245, 158, 11, 0.08);
+  }
+
+  .btn-google-hero:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .btn-google-hero:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  /* Light spinner variant for darker background */
+  .spinner--light {
+    border-color: rgba(250, 247, 240, 0.2);
+    border-top-color: var(--fg);
+  }
+
+  /* Legal / privacy line */
+  .login-legal {
+    margin-top: 18px;
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    text-align: center;
+  }
+
+  /* Illustration — offset below the CTA */
+  .login-illustration {
+    margin-top: 56px;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  /* ── LEFT PANEL ── */
+  .auth-left {
+    position: relative;
+    width: 46%;
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: stretch;
+    background: var(--bg-left);
+    border-right: 1px solid rgba(245, 158, 11, 0.08);
+  }
+
+  .auth-left-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 52px;
+    width: 100%;
+  }
+
+  /* ── Brand row ── */
+  .auth-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .brand-wordmark {
+    font-size: 1.375rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--fg);
+  }
+
+  /* ── Headline ── */
+  .auth-headline {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.18;
+    letter-spacing: -0.035em;
+    color: var(--fg);
+    margin-bottom: 16px;
+  }
+
+  .auth-headline-accent {
+    color: var(--amber);
+  }
+
+  /* ── Description ── */
+  .auth-description {
+    font-size: 0.9375rem;
+    color: var(--fg-dim);
+    line-height: 1.75;
+    max-width: 340px;
+    margin-bottom: 32px;
+  }
+
+  /* ── Feature pills ── */
+  .auth-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 48px;
+  }
+
+  .auth-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--fg-dim);
+    background: rgba(245, 158, 11, 0.05);
+    border: 1px solid rgba(245, 158, 11, 0.10);
+    border-radius: 8px;
+    padding: 9px 16px;
+    width: fit-content;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .auth-pill:hover {
+    background: rgba(245, 158, 11, 0.09);
+    border-color: rgba(245, 158, 11, 0.2);
+    color: var(--amber-light);
+  }
+
+  /* ── Illustration area ── */
+  .auth-illustration {
+    position: relative;
+    height: 200px;
+  }
+
+  /* Central glow ring */
+  .ill-ring {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1.5px solid rgba(245, 158, 11, 0.18);
+    animation: glow-ring 6s ease-in-out infinite;
+    box-shadow:
+      0 0 30px rgba(245, 158, 11, 0.12),
+      inset 0 0 30px rgba(245, 158, 11, 0.06);
+  }
+
+  /* Floating document cards */
+  .ill-card {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: rgba(20, 16, 9, 0.90);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(245, 158, 11, 0.12);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+    min-width: 210px;
+    white-space: nowrap;
+  }
+
+  .ill-card-1 {
+    top: 0;
+    left: -10px;
+    animation: card-float-1 4s ease-in-out infinite;
+  }
+
+  .ill-card-2 {
+    top: 65px;
+    right: -20px;
+    animation: card-float-2 5.5s ease-in-out infinite;
+    animation-delay: -2s;
+  }
+
+  .ill-card-3 {
+    bottom: 0;
+    left: 30px;
+    animation: card-float-3 4.8s ease-in-out infinite;
+    animation-delay: -1.2s;
+  }
+
+  .ill-card-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ill-card-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: rgba(250, 247, 240, 0.88);
+  }
+
+  .ill-card-meta {
+    font-size: 0.71rem;
+    color: var(--fg-muted);
+    margin-top: 2px;
+  }
+
+  /* Orbiting dots */
+  .ill-dot {
+    display: none;
+  }
+
+  /* Sync badge */
+  .ill-badge {
+    position: absolute;
+    top: -14px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 13px;
+    border-radius: 99px;
+    background: rgba(20, 16, 9, 0.95);
+    border: 1px solid rgba(245, 158, 11, 0.22);
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--amber-light);
+    backdrop-filter: blur(12px);
+    animation: badge-pulse 2.5s ease-in-out infinite;
+  }
+
+  .ill-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+    animation: dot-blink 1.6s ease-in-out infinite;
+  }
+
+  /* ── RIGHT PANEL ── */
+  .auth-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0d0b07;
+    padding: 40px 24px;
+  }
+
+  .auth-right-inner {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* ============================================================
+     GLASSMORPHISM CARD
+     ============================================================ */
+  .glass-card-wrapper {
+    position: relative;
+    animation: card-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .glass-card-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 17px;
+    background: rgba(245, 158, 11, 0.18);
+    z-index: 0;
+  }
+
+  .glass-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(18, 14, 8, 0.92);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-radius: 16px;
+    border: 1px solid rgba(245, 158, 11, 0.10);
+    box-shadow:
+      inset 0 1px 0 rgba(245, 158, 11, 0.12),
+      0 24px 60px rgba(0, 0, 0, 0.6);
+  }
+
+  /* ============================================================
+     BRAND ICON
+     ============================================================ */
+  .brand-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--amber);
+    box-shadow: 0 2px 16px rgba(245, 158, 11, 0.35);
+    flex-shrink: 0;
+  }
+
+  /* ============================================================
+     GLASS INPUT
+     ============================================================ */
+  .glass-input {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--fg);
+    border-radius: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 0.9375rem;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    outline: none;
+  }
+
+  .glass-input::placeholder {
+    color: var(--fg-muted);
+  }
+
+  .glass-input:focus {
+    border-color: rgba(245, 158, 11, 0.45);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.10);
+    background: rgba(255, 245, 215, 0.06);
+  }
+
+  .input-wrapper {
+    position: relative;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--fg-muted);
+    pointer-events: none;
+    display: flex;
+  }
+
+  .glass-input.has-icon {
+    padding-left: 44px;
+  }
+
+  .glass-input.has-action {
+    padding-right: 44px;
+  }
+
+  .input-action-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--fg-muted);
+    display: flex;
+    padding: 4px;
+    transition: color 0.2s;
+  }
+
+  .input-action-btn:hover {
+    color: var(--amber);
+  }
+
+  /* ============================================================
+     FORM LABEL
+     ============================================================ */
+  .form-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-bottom: 7px;
+  }
+
+  /* ============================================================
+     PRIMARY BUTTON
+     ============================================================ */
+  .btn-primary {
+    position: relative;
+    width: 100%;
+    padding: 13px 24px;
+    border-radius: 10px;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    border: none;
+    color: #0a0906;
+    background: var(--amber);
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+    box-shadow: 0 4px 18px rgba(245, 158, 11, 0.3);
+    font-family: inherit;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: var(--amber-light);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 28px rgba(245, 158, 11, 0.45);
+  }
+
+  .btn-primary:active:not(:disabled) {
+    transform: translateY(0);
+    background: var(--amber-dim);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  /* ============================================================
+     GOOGLE BUTTON
+     ============================================================ */
+  .btn-google {
+    width: 100%;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid rgba(255, 245, 215, 0.09);
+    background: rgba(255, 245, 215, 0.04);
+    color: var(--fg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    font-family: inherit;
+  }
+
+  .btn-google:hover {
+    background: rgba(255, 245, 215, 0.07);
+    border-color: rgba(245, 158, 11, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .btn-google:active {
+    transform: translateY(0);
+  }
+
+  /* ============================================================
+     DIVIDER
+     ============================================================ */
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--fg-muted);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .auth-divider::before,
+  .auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 245, 215, 0.07);
+  }
+
+  /* ============================================================
+     STRENGTH METER
+     ============================================================ */
+  .strength-bar {
+    height: 3px;
+    border-radius: 99px;
+    flex: 1;
+    transition: background 0.3s;
+  }
+
+  /* ============================================================
+     LINKS & MISC
+     ============================================================ */
+  .auth-link {
+    color: var(--amber);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .auth-link:hover {
+    color: var(--amber-light);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .auth-error {
+    color: #f87171;
+    font-size: 0.8rem;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* ============================================================
+     SPINNER
+     ============================================================ */
+  .spinner {
+    width: 17px;
+    height: 17px;
+    border: 2px solid rgba(10, 9, 6, 0.3);
+    border-top-color: #0a0906;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 860px) {
+    .auth-shell {
+      flex-direction: column;
+    }
+
+    .auth-left {
+      width: 100%;
+      min-height: 280px;
+      border-right: none;
+      border-bottom: 1px solid rgba(245, 158, 11, 0.08);
+    }
+
+    .auth-left-content {
+      padding: 36px 28px 28px;
+    }
+
+    .auth-headline {
+      font-size: 1.7rem;
+    }
+
+    .auth-description {
+      display: none;
+    }
+
+    .auth-illustration {
+      display: none;
+    }
+
+    .auth-right {
+      padding: 32px 20px 48px;
+    }
+  }
+
+}
+
+/* end @layer components */
+
+/* ============================================================
+   APP SHELL — added for MyKeeper dashboard
+   ============================================================ */
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Custom scrollbar — Defined in @layer base to ensure Tailwind classes can override them. */
+@layer base {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(245, 158, 11, 0.15);
+    border-radius: 99px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(245, 158, 11, 0.30);
+  }
+}
