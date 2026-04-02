@@ -37,7 +37,7 @@ Follow these steps to run the project locally.
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/mykeeper.git
+   git clone https://github.com/addy015/mykeeper.git
    cd mykeeper
    ```
 
@@ -65,4 +65,4 @@ Follow these steps to run the project locally.
 
 ## 🤝 Let's Connect!
 
-If you found this project interesting or have any feedback, feel free to reach out to me on [LinkedIn](www.linkedin.com/in/abhishek-maurya-04075b335) or check out more of my work on [GitHub](https://github.com/addy015).
+If you found this project interesting or have any feedback, feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/abhishek-maurya-04075b335) or check out more of my work on [GitHub](https://github.com/addy015).
