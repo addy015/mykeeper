@@ -1,10 +1,10 @@
 /**
  * @file app/api/ping/route.js
- * @description Appwrite keepalive endpoint.
+ * @description Appwrite keepalive endpoint — server-side using node-appwrite SDK.
  */
 
 import { NextResponse } from "next/server";
-import { Client, Databases, Query } from "appwrite";
+import { Client, Databases, Query } from "node-appwrite";
 
 // Secret guard
 const PING_SECRET = process.env.PING_SECRET ?? null;
@@ -37,14 +37,11 @@ export async function GET(request) {
     }
 
     try {
-        // Actual Appwrite API call
-        // Fetch only 1 document — minimum bandwidth, maximum effect.
+        // ✅ node-appwrite Client with proper API key support
         const client = new Client()
             .setEndpoint(endpoint)
-            .setProject(projectId);
-
-        // Manually set API key header (Admin access)
-        client.headers["X-Appwrite-Key"] = apiKey;
+            .setProject(projectId)
+            .setKey(apiKey); // Proper admin key method
 
         const databases = new Databases(client);
 
@@ -59,7 +56,6 @@ export async function GET(request) {
             documentsFound: result.total ?? 0,
         });
     } catch (error) {
-        // Log error too — for debugging
         console.error("[/api/ping] Appwrite ping failed:", error);
         return NextResponse.json(
             {
